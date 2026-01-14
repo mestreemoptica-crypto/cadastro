@@ -12,6 +12,7 @@
             --card: #141414;
             --text: #FFFFFF;
             --input: #252525;
+            --warning: #FFD600;
         }
 
         * { box-sizing: border-box; }
@@ -30,7 +31,7 @@
 
         .login-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             background-color: var(--card);
             padding: 40px 30px;
             border-radius: 15px;
@@ -53,7 +54,20 @@
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* FRASE DE ATENÇÃO */
+        .attention-box {
+            background-color: rgba(255, 214, 0, 0.1);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+            text-align: left;
+            line-height: 1.4;
         }
 
         .form-group {
@@ -84,6 +98,11 @@
 
         input:focus {
             border-color: var(--primary);
+        }
+
+        /* Estilo visual para campos obrigatórios nativos do navegador */
+        input:invalid:focus {
+            border-color: #ff5252;
         }
 
         .btn-access {
@@ -120,29 +139,33 @@
             <div class="badge">ACESSO LIBERADO PARA 30 DIAS</div>
         </header>
 
+        <div class="attention-box">
+            <strong>⚠️ ATENÇÃO:</strong> Todos os campos abaixo são obrigatórios. Precisamos desses dados para formatar e personalizar o seu painel de acordo com as necessidades da sua loja.
+        </div>
+
         <form id="accessForm">
             <div class="form-group">
-                <label>Seu Nome</label>
+                <label>Seu Nome *</label>
                 <input type="text" id="nome" placeholder="Nome completo" required>
             </div>
 
             <div class="form-group">
-                <label>Nome da Óptica</label>
+                <label>Nome da Óptica *</label>
                 <input type="text" id="otica" placeholder="Nome da sua loja" required>
             </div>
 
             <div class="form-group">
-                <label>Cidade</label>
+                <label>Cidade *</label>
                 <input type="text" id="cidade" placeholder="Sua cidade - UF" required>
             </div>
 
             <div class="form-group">
-                <label>E-mail Profissional</label>
+                <label>E-mail Profissional *</label>
                 <input type="email" id="email" placeholder="seu@email.com" required>
             </div>
 
             <div class="form-group">
-                <label>WhatsApp</label>
+                <label>WhatsApp *</label>
                 <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
             </div>
 
@@ -156,7 +179,6 @@
         document.getElementById('accessForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Coletando os dados
             const nome = document.getElementById('nome').value;
             const otica = document.getElementById('otica').value;
             const cidade = document.getElementById('cidade').value;
@@ -165,18 +187,17 @@
             
             const numeroZap = "5541996509734";
 
-            // Formatando a mensagem para o WhatsApp
             const mensagem = encodeURIComponent(
-                `*SOLICITAÇÃO DE ACESSO - PAINEL ALTA PERFORMANCE*\n\n` +
+                `*NOVA SOLICITAÇÃO DE ACESSO*\n` +
+                `*Painel Alta Performance (30 Dias)*\n\n` +
                 `*Consultor:* ${nome}\n` +
                 `*Óptica:* ${otica}\n` +
                 `*Cidade:* ${cidade}\n` +
                 `*E-mail:* ${email}\n` +
                 `*Telefone:* ${telefone}\n\n` +
-                `_Gostaria de liberar meus 30 dias de teste grátis._`
+                `_Favor formatar o painel para esta unidade._`
             );
 
-            // Redirecionando para o WhatsApp
             window.open(`https://api.whatsapp.com/send?phone=${numeroZap}&text=${mensagem}`, '_blank');
         });
     </script>
